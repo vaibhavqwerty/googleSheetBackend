@@ -1,0 +1,63 @@
+server:
+  port: ${PORT:8070}
+
+app:
+  env: ${ENVIRONMENT:local}
+  serverDomainName: ${SERVER_DOMAIN:http://localhost:8070}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,env
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+
+db:
+  max-active: ${DB_MAX_ACTIVE:10}
+  name: ${DB_NAME:demo_project}
+  server: ${DB_SERVER_NAME:localhost}
+  url:
+  password: ${DB_PASSWORD:postgres}
+  username: ${DB_USER:postgres}
+  idle-timeout: ${DB_MINIMUM_IDLE:10}
+  connection-timeout: ${DB_CONNECTION_TIMEOUT:150000}
+
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database: default
+    openInView: false
+    show_sql: true
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+      naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
+    properties:
+      hibernate.cache.use_second_level_cache: false
+      hibernate.jdbc.lob.non_contextual_creation: true
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+        type:
+          descriptor:
+            sql: trace #show sql values
+
+api:
+  search:
+    default:
+      page_number: 1
+      page_size: 10
+    max:
+      page_size: 1000
+
+rest-template:
+  timeout:
+    connection: 60
+    read: 60
+
